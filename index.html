@@ -69,12 +69,20 @@
           - autoplay: Inicia la reproducción sola.
           - controls: Muestra los controles por si el navegador bloquea el autoplay con sonido.
           - loop: Opcional, repite el video infinitamente.
+          - muted: Esencial para que el autoplay funcione en la mayoría de navegadores.
           - playsinline: Necesario para dispositivos móviles.
         -->
-        <video autoplay muted controls loop playsinline>
+        <video id="bg-video" autoplay muted loop playsinline>
             <source src="assets/video.mp4" type="video/mp4">
             Tu navegador no soporta la reproducción de video.
         </video>
+
+        <!-- Capa para activar sonido -->
+        <div id="sound-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+            <div style="color: white; text-align: center; text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);">
+                <h1>Toca para activar el sonido</h1>
+            </div>
+        </div>
 
         <!-- Opcional: Texto encima del video -->
         <div class="content-overlay">
@@ -83,5 +91,16 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('bg-video');
+            const soundOverlay = document.getElementById('sound-overlay');
+
+            soundOverlay.addEventListener('click', () => {
+                video.muted = false;
+                soundOverlay.style.display = 'none';
+            }, { once: true }); // El evento solo se ejecutará una vez
+        });
+    </script>
 </body>
 </html>
